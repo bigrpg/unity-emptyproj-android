@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 import android.content.Intent;
 
-import com.zulong.unisdk.CommonSDK;
+import com.zulong.unisdk.UCSDK;
 import com.zulong.sdk.core.open.SDKBase;
 import com.zulong.sdk.core.open.SDKInterface;
 import com.zulong.sdk.core.util.LogUtil;
@@ -27,7 +27,7 @@ public class ZLPlayerActivity extends UnityPlayerActivity {
 		super.onCreate(savedInstanceState);
 		
 		LogUtil.setLOG(true);
-		SDKBase.INSTANCE = new CommonSDK();
+		SDKBase.INSTANCE = new UCSDK();
 		SDKBase.getInstance(this);
 		
 		LogUtil.d("ZLPlayerActivity","onCreate called!");

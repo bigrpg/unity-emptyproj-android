@@ -14,6 +14,7 @@ public class TestAction : MonoBehaviour {
 	}
 
 
+
     public void onClickLogin()
     {
         Debug.Log("onClickLogin");
