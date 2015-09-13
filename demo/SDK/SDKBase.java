@@ -10,6 +10,7 @@ import org.json.JSONException;
 import com.zulong.sdk.core.open.SDKInterface;
 import com.zulong.sdk.core.util.LogUtil;
 import com.zulong.sdk.core.util.Toast;
+import com.zulong.sdk.core.util.SDKFactory;
 import com.zulong.sdk.core.config.ConfigReader;
 import com.zulong.sdk.core.ui.floatview.FloatViewItem;
 import com.zulong.sdk.core.bean.Account;
@@ -71,7 +72,19 @@ public abstract class SDKBase extends SDKImpl
   public static SDKBase getInstance(Activity activity)
   {
     mActivity = activity;
-		return INSTANCE;
+    if (INSTANCE == null)
+      synchronized (SDKBase.class)
+      {
+        if (INSTANCE == null)
+          INSTANCE = getInstanceImpl();
+      }
+    return INSTANCE;
+  }
+  
+  private static SDKBase getInstanceImpl()
+  {
+  	SDKFactory.instance().init(mActivity);
+  	return SDKFactory.instance().create(SDKBase.class);
   }
 
   public void init(int appId, String appKey, SDKInterface.InitCallBack initCallBack)
