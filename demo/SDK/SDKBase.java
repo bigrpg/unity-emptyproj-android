@@ -36,7 +36,7 @@ public abstract class SDKBase extends SDKImpl
   private String mChannelName;
   private volatile boolean mHasLogin = false;
   private volatile InitState mChannelInitState = InitState.process;
-  private volatile InitState mOnesdkInitState = InitState.process;
+  private volatile InitState mUnisdkInitState = InitState.process;
   private volatile String mInitMsg;
   protected SDKInterface.InitCallBack mInitCallBack;
   protected SDKInterface.LoginCallBack mLoginCallBack;
@@ -128,13 +128,13 @@ public abstract class SDKBase extends SDKImpl
   
   private void tryFlash()
   {
-  	onOnesdkInitSuccess();
+  	onUnisdkInitSuccess();
   	notifyInitResult();
   }
   
-  private void onOnesdkInitSuccess()
+  private void onUnisdkInitSuccess()
   {
-    this.mOnesdkInitState = InitState.success;
+    this.mUnisdkInitState = InitState.success;
     notifyInitResult();
   } 
   
@@ -187,12 +187,12 @@ public abstract class SDKBase extends SDKImpl
     {
       public void run()
       {
-        if ((SDKBase.this.mOnesdkInitState == SDKBase.InitState.success) && (SDKBase.this.mChannelInitState == SDKBase.InitState.success))
+        if ((SDKBase.this.mUnisdkInitState == SDKBase.InitState.success) && (SDKBase.this.mChannelInitState == SDKBase.InitState.success))
         {
           SDKBase.this.mInitCallBack.initSucceed(SDKBase.this.mInitMsg);
           return;
         }
-        if ((SDKBase.this.mOnesdkInitState == SDKBase.InitState.fail) || (SDKBase.this.mChannelInitState == SDKBase.InitState.fail))
+        if ((SDKBase.this.mUnisdkInitState == SDKBase.InitState.fail) || (SDKBase.this.mChannelInitState == SDKBase.InitState.fail))
           SDKBase.this.mInitCallBack.initFailed(SDKBase.this.mInitMsg);
       }
     });
@@ -479,7 +479,7 @@ public abstract class SDKBase extends SDKImpl
   
   private boolean checkInit()
   {
-    if ((this.mOnesdkInitState != InitState.success) || (this.mChannelInitState != InitState.success))
+    if ((this.mUnisdkInitState != InitState.success) || (this.mChannelInitState != InitState.success))
       throw new RuntimeException("Œ¥≥ı ºªØ");
     return true;
   }
@@ -527,6 +527,11 @@ public abstract class SDKBase extends SDKImpl
           mAccount = new Account();
       }
     return mAccount;
+  }
+  
+  public void submitUserInfo(UserInfoType userInfoType, UserInfo userInfo, SDKInterface.CompleteCallBack completeCallBack)
+  {
+    completeCallBack.onComplete();
   }
   
   //

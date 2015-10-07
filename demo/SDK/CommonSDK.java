@@ -73,7 +73,7 @@ public final class CommonSDK extends SDKBase
 
   public String getChannelName()
   {
-    return "OneSDK";
+    return "UniSDK";
   }
 
   protected ConfigReader getConfigReader()

@@ -170,7 +170,7 @@ public abstract class ConfigReader
   private HashMap<String, Param> getMeta(String meta)
     throws JSONException
   {
-  	LogUtil.e(TAG,"meta string:"+meta);
+  	LogUtil.d(TAG,"meta string:"+meta);
     HashMap localHashMap = new HashMap();
     JSONObject json = new JSONObject(meta);
     localHashMap.put("version", new Param("version", json.getString("version"), true));

@@ -11,6 +11,8 @@ import android.content.Intent;
 
 import com.zulong.unisdk.CommonSDK;
 import com.zulong.sdk.core.open.SDKBase;
+import com.zulong.sdk.core.open.SDKBase.UserInfoType;
+import com.zulong.sdk.core.open.UserInfo;
 import com.zulong.sdk.core.open.SDKInterface;
 import com.zulong.sdk.core.util.LogUtil;
 import com.zulong.sdk.core.param.OrderParams;
@@ -27,7 +29,6 @@ public class ZLPlayerActivity extends UnityPlayerActivity {
 		super.onCreate(savedInstanceState);
 		
 		LogUtil.setLOG(true);
-		//SDKBase.INSTANCE = new CommonSDK();
 		SDKBase.getInstance(this);
 		
 		LogUtil.d("ZLPlayerActivity","onCreate called!");
@@ -70,6 +71,22 @@ public class ZLPlayerActivity extends UnityPlayerActivity {
 						mContext,
 						"userId: " + userId + "\n" + "token: " + token + "\n" + "password: " + password + "\n"
 								+ "msg: " + msg, Toast.LENGTH_LONG).show();
+								
+								
+				UserInfo userInfo = new UserInfo();
+				userInfo.setRoleId("312345");
+				userInfo.setRoleName("tom");
+				userInfo.setLv("99");
+				userInfo.setZoneId(1);
+				userInfo.setZoneName("游戏一区");
+				SDKBase.getInstance(ZLPlayerActivity.this).submitUserInfo(UserInfoType.CREATE_ROLE, userInfo,
+						new SDKInterface.CompleteCallBack() {
+	
+							@Override
+							public void onComplete() {
+								Toast.makeText(mContext, "submitCreateRoleInfo complete", Toast.LENGTH_LONG).show();
+							}
+						});
 			}
 
 			@Override
@@ -139,11 +156,11 @@ public class ZLPlayerActivity extends UnityPlayerActivity {
 		 */
 		/**
 		 * price,unit is RMB Fen. some channel's paying unit is RMB Yuan,but
-		 * OneSDK's is RMB Fen,so you'd better set price to An integer multiple
+		 * UniSDK's is RMB Fen,so you'd better set price to An integer multiple
 		 * of 100;int
 		 */
 		orderParams.setPrice(price);
-		/** 游戏服务器id，每一个服务器id在Onesdk后台对应一个支付通知地址，默认为0；int */
+		/** 游戏服务器id，每一个服务器id在UniSDK后台对应一个支付通知地址，默认为0；int */
 		/**
 		 * game server id,in sdk developer center, you can config a payment
 		 * notify url for each server id(1 notify url,1 server id);int
@@ -182,7 +199,7 @@ public class ZLPlayerActivity extends UnityPlayerActivity {
 		/** 商品描述；String */
 		/** product description;String */
 		orderParams.setProductDesc("1000元宝礼包的商品描述");
-		/** 附加字段；放在附加字段中的值，OneSDK服务器端会不作任何修改通过服务器通知透传给游戏服务器；String */
+		/** 附加字段；放在附加字段中的值，UniSDK服务器端会不作任何修改通过服务器通知透传给游戏服务器；String */
 		/**
 		 * extra data,sdk server will pass 'extra data' via sdk server notify
 		 * with modify nothing;String
